@@ -1,13 +1,13 @@
-import { FC, PropsWithChildren } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { FC, PropsWithChildren } from 'react'
 import {
-  TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
   ScrollView,
-} from "react-native";
+  TouchableWithoutFeedback,
+} from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
-export const DismissKeyBoardView: FC<PropsWithChildren> = ({ children }) => {
+export const DismissKeyboardView: FC<PropsWithChildren> = ({ children }) => {
   return (
     <SafeAreaView className="flex-1 bg-background-primary">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -16,5 +16,5 @@ export const DismissKeyBoardView: FC<PropsWithChildren> = ({ children }) => {
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </SafeAreaView>
-  );
-};
+  )
+}

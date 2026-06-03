@@ -1,9 +1,16 @@
-import { Text, View } from 'react-native'
+import { AuthHeader } from '@/components/AuthHeader'
+import { DismissKeyboardView } from '@/components/DismissKeyboard'
+import { View } from 'react-native'
 
-export function Login() {
+import { LoginForm } from './LoginForm'
+
+export const Login = () => {
   return (
-    <View className="flex-1 items-center justify-center">
-      <Text>Tela de login</Text>
-    </View>
+    <DismissKeyboardView>
+      <View className="flex-1 w-[82%] self-center">
+        <AuthHeader />
+        <LoginForm />
+      </View>
+    </DismissKeyboardView>
   )
 }

@@ -1,7 +1,7 @@
-import { colors } from "@/shared/colors";
-import { MaterialIcons } from "@expo/vector-icons";
-import { FC, PropsWithChildren } from "react";
-import { Text, View } from "react-native";
+import { colors } from '@/shared/colors'
+import { MaterialIcons } from '@expo/vector-icons'
+import { FC, PropsWithChildren } from 'react'
+import { Text, View } from 'react-native'
 
 export const ErrorMessage: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -9,11 +9,13 @@ export const ErrorMessage: FC<PropsWithChildren> = ({ children }) => {
       <MaterialIcons
         name="error-outline"
         size={16}
-        color={colors["accent-red-background-primary"]}
+        color={colors['accent-red-background-primary']}
         className="mr-1"
       />
 
-      <Text className="text-accent-red-background-primary">{children}</Text>
+      <Text className="text-accent-red-background-primary">
+        {children}
+      </Text>
     </View>
-  );
-};
+  )
+}

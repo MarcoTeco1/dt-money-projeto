@@ -1,3 +1,4 @@
+import { ErrorMessage } from '@/components/ErrorMessage'
 import { colors } from '@/shared/colors'
 import { MaterialIcons } from '@expo/vector-icons'
 import clsx from 'clsx'
@@ -41,7 +42,10 @@ export const AppInput = <T extends FieldValues>({
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, value } }) => {
+      render={({
+        field: { onChange, value },
+        fieldState: { error },
+      }) => {
         return (
           <View className="w-full mt-4">
             {label && (
@@ -77,7 +81,6 @@ export const AppInput = <T extends FieldValues>({
                 className="flex-1 text-base text-gray-500"
               />
 
-              {/* Botão de mostrar/esconder a senha */}
               {secureTextEntry && (
                 <TouchableOpacity onPress={() => setShowText((value) => !value)}>
                   <MaterialIcons
@@ -88,6 +91,13 @@ export const AppInput = <T extends FieldValues>({
                 </TouchableOpacity>
               )}
             </TouchableOpacity>
+
+            {/* A mágica acontece aqui! */}
+            {error && (
+              <ErrorMessage>
+                {error.message}
+              </ErrorMessage>
+            )}
           </View>
         )
       }}

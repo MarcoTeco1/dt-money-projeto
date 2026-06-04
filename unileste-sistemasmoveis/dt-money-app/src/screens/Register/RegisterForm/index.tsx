@@ -1,11 +1,14 @@
 import { AppButton } from '@/components/AppButton'
 import { AppInput } from '@/components/AppInput'
+import { useAuthContext } from '@/context/auth.context'
 import { PublicStackParamsList } from '@/routes/PublicRoutes'
+import { useErrorHandler } from '@/shared/hooks/useErrorHandler'
+import { colors } from '@/shared/colors'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useForm } from 'react-hook-form'
-import { Text, View } from 'react-native'
+import { ActivityIndicator, Text, View } from 'react-native'
 
 import { schema } from './schema'
 
@@ -18,6 +21,9 @@ export interface FormRegisterParams {
 
 export const RegisterForm = () => {
   const navigation = useNavigation<StackNavigationProp<PublicStackParamsList>>()
+
+  const { handleRegister } = useAuthContext()
+  const { errorHandler } = useErrorHandler()
 
   const {
     control,
@@ -33,8 +39,13 @@ export const RegisterForm = () => {
     resolver: yupResolver(schema),
   })
 
-  // Função vazia 
-  const onSubmit = async () => {}
+  const onSubmit = async (userData: FormRegisterParams) => {
+    try {
+      await handleRegister(userData)
+    } catch (error) {
+      errorHandler(error, 'Falha ao cadastrar usuário')
+    }
+  }
 
   return (
     <>
@@ -44,9 +55,12 @@ export const RegisterForm = () => {
       <AppInput control={control} name="confirmPassword" leftIconName="lock-outline" label="SENHA" placeholder="Confirme sua senha" secureTextEntry />
 
       <View className="flex-1 justify-between mt-8 mb-8 min-h-[250px]">
-        {/* Adicionado o onPress no Cadastrar! */}
         <AppButton iconName="arrow-forward" onPress={handleSubmit(onSubmit)}>
-          Cadastrar
+          {isSubmitting ? (
+            <ActivityIndicator color={colors.white} />
+          ) : (
+            'Cadastrar'
+          )}
         </AppButton>
 
         <View>

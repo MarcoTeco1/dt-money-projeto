@@ -92,7 +92,6 @@ export const AppInput = <T extends FieldValues>({
               )}
             </TouchableOpacity>
 
-            {/* A mágica acontece aqui! */}
             {error && (
               <ErrorMessage>
                 {error.message}

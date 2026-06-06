@@ -1,17 +1,28 @@
-import { useAuthContext } from '@/context/auth.context'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { AppHeader } from '@/components/AppHeader'
+import { useTransactionContext } from '@/context/transaction.context'
+import { useErrorHandler } from '@/shared/hooks/useErrorHandler'
+import { useEffect } from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export const Home = () => {
-  const { handleLogout } = useAuthContext()
+  const { fetchCategories } = useTransactionContext()
+  const { errorHandler } = useErrorHandler()
+
+  const handleFetchCategories = async () => {
+    try {
+      await fetchCategories()
+    } catch (error) {
+      errorHandler(error, 'Falha ao buscar as categorias')
+    }
+  }
+
+  useEffect(() => {
+    handleFetchCategories()
+  }, [])
 
   return (
-    <View className="flex-1 items-center justify-center bg-background-primary">
-      <TouchableOpacity 
-        onPress={handleLogout}
-        className="bg-accent-brand p-4 rounded-md"
-      >
-        <Text className="text-white font-bold">Sair Temporário</Text>
-      </TouchableOpacity>
-    </View>
+    <SafeAreaView className="flex-1 bg-background-primary">
+      <AppHeader />
+    </SafeAreaView>
   )
 }
